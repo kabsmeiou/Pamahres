@@ -141,12 +141,12 @@ const Chatbox = ({
                 rows={1}
               />
               <div className="absolute bottom-2 right-2 flex justify-end gap-2">
-                <button
+                {/* <button
                   type="button"
                   className="p-2 text-surface-400 dark:text-surface-500 hover:text-surface-600 dark:hover:text-surface-300 hover:bg-surface-100 dark:hover:bg-surface-700 rounded-full transition-colors"
                 >
                   <Paperclip size={18} />
-                </button>
+                </button> */}
                 <button
                   type="submit"
                   className="bg-gradient-to-r from-primary-600 to-primary-500 hover:from-primary-700 hover:to-primary-600 text-white p-2.5 rounded-full transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"

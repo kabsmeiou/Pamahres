@@ -20,17 +20,24 @@ const ChatHistoryIndex = () => {
 
     if (isLoading) {
         return (
-            <div className="flex flex-col items-center justify-center h-full p-8">
-                <div className="bg-white dark:bg-surface-800 rounded-xl border border-surface-200 dark:border-surface-700 shadow-sm p-8 w-full max-w-lg">
+            <div className="container mx-auto p-6">
+                <div className="mb-8 flex items-center gap-3">
+                    <div className="p-3 bg-primary-50 dark:bg-primary-900/30 rounded-lg">
+                        <MessageCircle size={24} className="text-primary-600 dark:text-primary-400" />
+                    </div>
+                    <div>
+                        <h1 className="text-2xl font-bold text-surface-800 dark:text-surface-100">Chat History</h1>
+                        <p className="text-surface-500 dark:text-surface-400 text-sm">
+                            Review your past conversations with course materials
+                        </p>
+                    </div>
+                </div>
+                <div className="bg-white dark:bg-surface-800 rounded-xl border border-surface-200 dark:border-surface-700 shadow-sm p-8">
                     <div className="flex flex-col items-center text-center">
                         <div className="w-16 h-16 bg-primary-50 dark:bg-primary-900/30 rounded-full flex items-center justify-center mb-4">
                             <Clock size={24} className="text-primary-500 dark:text-primary-400 animate-pulse" />
                         </div>
-                        <h1 className="text-2xl font-bold mb-2 text-surface-800 dark:text-surface-100">Chat History</h1>
-                        <p className="text-surface-500 dark:text-surface-400 mb-6">Loading your conversation history...</p>
-                        <div className="w-full max-w-xs">
-                            <Loading type="default" count={3} />
-                        </div>
+                        <p className="text-surface-600 dark:text-surface-400">Loading chat history...</p>
                     </div>
                 </div>
             </div>
