@@ -127,26 +127,42 @@ class JWTAuthenticationMiddleware(BaseAuthentication):
 
         user_id = payload.get("sub")  # Get user ID from payload
 
-        # logging.info(payload)
+        logger.info(f"[CLERK AUTH] Processing user_id: {user_id} at {time.time()}")
         if user_id:
             get_or_create_start = time.time()
-            created = False
             try:
-                user = User.objects.get(username=user_id)
-            except User.DoesNotExist:
-                info, found = self.clerk_sdk.fetch_user_info(user_id)
-                user = User.objects.create(
+                # Use get_or_create to handle race conditions
+                user, created = User.objects.get_or_create(
                     username=user_id,
-                    first_name=info["first_name"],
-                    last_name=info["last_name"],
-                    email=info["email_address"],
+                    defaults={
+                        'first_name': '',
+                        'last_name': '',
+                        'email': '',
+                    }
                 )
-                created = True
+                
+                # If user was just created, fetch info from Clerk and update
+                if created:
+                    info, found = self.clerk_sdk.fetch_user_info(user_id)
+                    if found:
+                        user.first_name = info["first_name"]
+                        user.last_name = info["last_name"]
+                        user.email = info["email_address"]
+                        user.save()
+                    
+                    # Create related objects for new users
+                    Profile.objects.get_or_create(user=user)
+                    UserActivity.objects.get_or_create(user=user)
+                    
+            except Exception as e:
+                logger.error(f"Error creating/getting user {user_id}: {e}")
+                return None
+                
             get_or_create_end = time.time()
             logger.info(f"Time to get or create user: {get_or_create_end - get_or_create_start:.3f} seconds")
+            
             if created:
                 logger.info(f"User {user_id} created in database")
-                Profile.objects.create(user=user)
-                UserActivity.objects.create(user=user)
+                
             return user
         return None

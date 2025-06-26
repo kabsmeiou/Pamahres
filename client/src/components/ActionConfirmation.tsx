@@ -8,7 +8,7 @@ interface ActionConfirmationProps {
     headerMessage: string;
     bodyMessage: string;
     itemName?: string;
-    itemType?: 'Material' | 'Quiz' | 'Course';
+    itemType?: 'Material' | 'Quiz' | 'Course' | 'Profile';
     action?: 'delete' | 'submit' | 'other';
     confirmButtonText?: string;
     confirmButtonColor?: 'red' | 'primary';

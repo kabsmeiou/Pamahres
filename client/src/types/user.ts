@@ -4,7 +4,7 @@ export interface Profile {
     mbti_type: string;
     age: number;
     education_level: string;
-    course: string;
+    user_course: string;
     target_study_hours: number;
     current_grade: string;
 }
@@ -17,14 +17,7 @@ export interface User {
 }
 
 export interface UserDetail {
-    profile_id?: string;
-    username: string;
-    mbti_type: string;
-    age: number;
-    education_level: string;
-    course: string;
-    target_study_hours: number;
-    current_grade: string;
+    profile: Profile;
     user_id?: string;
     first_name: string;
     last_name: string;

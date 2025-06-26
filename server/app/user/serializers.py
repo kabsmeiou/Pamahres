@@ -30,9 +30,10 @@ class ProfileSerializer(serializers.ModelSerializer):
       'education_level', 'user_course', 'target_study_hours', 
       'current_grade'
     ]
+    read_only_fields = ['user', 'id']
 
 class UserWithProfileSerializer(serializers.HyperlinkedModelSerializer):
-  profile = ProfileSerializer(read_only=True)
+  profile = ProfileSerializer()
 
   class Meta:
     model = User
